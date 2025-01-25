@@ -31,7 +31,7 @@ public class RootController {
         return userService.save(user);
     }
 
-    @GetMapping("/jwt-login")
+    @GetMapping("/login")
     public ResponseEntity<Object> login(@RequestBody User user) throws Exception {
         Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(user.getUsername(), user.getPassword()));
 

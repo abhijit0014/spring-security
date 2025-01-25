@@ -19,12 +19,15 @@ import project.spring_security.filter.JwtFilter;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Autowired
     public CustomUserDetailsService userDetailsService;
-    @Autowired
     private PasswordEncoder passwordEncoder;
-    @Autowired
     private JwtFilter jwtFilter;
+
+    public SecurityConfig(CustomUserDetailsService userDetailsService, PasswordEncoder passwordEncoder, JwtFilter jwtFilter) {
+        this.userDetailsService = userDetailsService;
+        this.passwordEncoder = passwordEncoder;
+        this.jwtFilter = jwtFilter;
+    }
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {

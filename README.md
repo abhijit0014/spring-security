@@ -2,7 +2,8 @@
 
 **Authentication** – it’s about validating the received credentials; it’s where we verify that both username and password match the ones that our application recognizes
 
-**Authorization** –it’s about verifying if the successfully authenticated user has permissions to access a certain functionality of the application
+**Authorization** –it’s about verifying if the authenticated user has permissions to access a certain functionality of the application
+
 
 
 ### Spring security 6 endpoints
@@ -25,6 +26,7 @@ GET - http://localhost:5151/login
 output - JwtToken
 eyJ0eXAiOiJqd3QiLCJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJPdmkiLCJpYXQiOjE3Mzc3ODAwMjksImV4cCI6MTczNzc4MDMyOX0.jpFhqpkPrmV7saiYauHJ0bl6MO9ooINpR06vcwJeVV4
 ````
+
 
 ### Dependency
 ````
