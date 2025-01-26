@@ -1,6 +1,5 @@
 package project.spring_security.security;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -31,35 +30,44 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+
         http
                 .csrf(Customizer.withDefaults())
-                //.httpBasic(Customizer.withDefaults()) // rest login - Basic
-                .formLogin(Customizer.withDefaults()) // form login
-                .securityMatcher("/user/**") .authorizeHttpRequests(authorize ->
-                        authorize.anyRequest().authenticated()
+                .httpBasic(Customizer.withDefaults())
+                .authorizeHttpRequests((authorize) -> authorize
+                        .requestMatchers("/login", "/signup").permitAll()
+                        .requestMatchers("/user/**").hasAuthority("USER")
+                        .requestMatchers("/admin/**").hasAuthority("ADMIN")
+                        .anyRequest().authenticated()
                 )
-
-                // rest login - jwt
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
     }
 
+    /*
+    authenticate user by username and password
+    decrypt password, match password
+
+    Other providers
+    OAuth2LoginAuthenticationProvider
+    LDAPAuthenticationProvider
+    JdbcAuthenticationProvider
+     */
     @Bean
     public AuthenticationProvider authenticationProvider(){
-        /*
-        decrypt password
-        match password
-         */
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         provider.setUserDetailsService(userDetailsService);
         provider.setPasswordEncoder(passwordEncoder);
         return provider;
     }
 
+    // AuthenticationManager use AuthenticationProvider to authenticate
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration cofig) throws Exception {
         return cofig.getAuthenticationManager();
     }
 
 }
+
+
+// authorization failure handler

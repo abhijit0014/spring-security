@@ -14,9 +14,12 @@ public class UserController {
     public UserController(UserService userService) {
         this.userService = userService;
     }
-
+    @GetMapping("/")
+    public String home(){
+        return "User homepage";
+    }
     @GetMapping("/details")
-    public String signup(){
+    public String details(){
         return "User details page";
     }
 }
